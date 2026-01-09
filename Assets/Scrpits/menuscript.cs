@@ -38,14 +38,27 @@ public class GameMenuManager : MonoBehaviour
 
     // Called by "Play" button on Start Menu
     public void StartGame()
-    {
-        startMenuUI.SetActive(false);
-        pauseMenuUI.SetActive(false);
-        
-        Time.timeScale = 1f; // Run the game
-        isPaused = false;
-        SetMouseState(true);
-    }
+{
+    // Close the UI panels
+    startMenuUI.SetActive(false);
+    pauseMenuUI.SetActive(false);
+    
+
+    // --- SOLUTION FOR PROBLEM 1 ---
+    // Look for the Bot in the scene and tell it to reset its 'hasLost' state
+    BotController bot = FindObjectOfType<BotController>();
+    
+    // ------------------------------
+
+    if (mazeGenerator != null) mazeGenerator.Generate();
+
+    Time.timeScale = 1f; 
+    isPaused = false;
+    
+    // As per your request: keep mouse visible
+    Cursor.visible = true;
+    Cursor.lockState = CursorLockMode.None;
+}
 
     // Called by "Resume" button on Pause Menu
     public void ResumeGame()
