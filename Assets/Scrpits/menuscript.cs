@@ -13,14 +13,12 @@ public class GameMenuManager : MonoBehaviour
 
     void Start()
     {
-        // 1. Force the Start Menu open when the app launches
         OpenStartMenu();
     }
 
     void Update()
     {
-        // 2. LISTEN FOR ESCAPE KEY
-        // Only allow pausing if the Start Menu is NOT currently active
+       
         if (Input.GetKeyDown(KeyCode.Escape) && !startMenuUI.activeSelf)
         {
             if (isPaused)
@@ -34,31 +32,16 @@ public class GameMenuManager : MonoBehaviour
         }
     }
 
-    // --- BUTTON FUNCTIONS ---
-
-    // Called by "Play" button on Start Menu
+   
     public void StartGame()
-{
-    // Close the UI panels
-    startMenuUI.SetActive(false);
-    pauseMenuUI.SetActive(false);
-    
-
-    // --- SOLUTION FOR PROBLEM 1 ---
-    // Look for the Bot in the scene and tell it to reset its 'hasLost' state
-    BotController bot = FindObjectOfType<BotController>();
-    
-    // ------------------------------
-
-    if (mazeGenerator != null) mazeGenerator.Generate();
-
-    Time.timeScale = 1f; 
-    isPaused = false;
-    
-    // As per your request: keep mouse visible
-    Cursor.visible = true;
-    Cursor.lockState = CursorLockMode.None;
-}
+    {
+        startMenuUI.SetActive(false);
+        pauseMenuUI.SetActive(false);
+        
+        Time.timeScale = 1f; // Run the game
+        isPaused = false;
+        SetMouseState(true);
+    }
 
     // Called by "Resume" button on Pause Menu
     public void ResumeGame()

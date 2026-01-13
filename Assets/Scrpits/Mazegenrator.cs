@@ -12,7 +12,7 @@ public class MazeGenerator : MonoBehaviour
     public NavMeshSurface navSurface;
     public BotController botScript; 
     
-    // ADD THIS LINE TO LINK THE WIN POINT
+   
     public WinPoint winPoint; 
 
     [Header("Settings")]
@@ -28,16 +28,16 @@ public class MazeGenerator : MonoBehaviour
 
     public void Generate()
     {
-        // 1. Reset the Victory Screen / Win logic
+        
         if (winPoint != null)
         {
             winPoint.ResetGoal();
         }
 
-        // 2. Clear old bot path and maze
+       
         ClearOldMaze();
 
-        // 3. Initialize the grid
+        
         _mazeGrid = new MazeCell[_mazeWidth, _mazeDepth];
 
         for (int x = 0; x < _mazeWidth; x++)
@@ -48,13 +48,12 @@ public class MazeGenerator : MonoBehaviour
             }
         }
 
-        // 4. Carve paths
         GenerateMaze(null, _mazeGrid[0, 0]);
 
-        // 5. Bake NavMesh
+        
         if (navSurface != null) navSurface.BuildNavMesh();
 
-        // 6. Move bot to start
+    
         if (botScript != null) botScript.agent.Warp(Vector3.zero);
     }
 
@@ -90,7 +89,9 @@ public class MazeGenerator : MonoBehaviour
     {
         int x = Mathf.RoundToInt(currentCell.transform.position.x);
         int z = Mathf.RoundToInt(currentCell.transform.position.z);
-        if (x + 1 < _mazeWidth) { var c = _mazeGrid[x + 1, z]; if (!c.IsVisited) yield return c; }
+        if (x + 1 < _mazeWidth)
+         { var c = _mazeGrid[x + 1, z]; 
+         if (!c.IsVisited) yield return c; }
         if (x - 1 >= 0) { var c = _mazeGrid[x - 1, z]; if (!c.IsVisited) yield return c; }
         if (z + 1 < _mazeDepth) { var c = _mazeGrid[x, z + 1]; if (!c.IsVisited) yield return c; }
         if (z - 1 >= 0) { var c = _mazeGrid[x, z - 1]; if (!c.IsVisited) yield return c; }

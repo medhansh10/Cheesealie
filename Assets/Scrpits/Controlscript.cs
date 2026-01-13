@@ -28,11 +28,10 @@ public class BotController : MonoBehaviour
 
     void Update()
     {
-        // 1. If Time is frozen (Lose Screen is up), stop all logic.
-        // This effectively replaces 'hasLost'
+        
         if (Time.timeScale == 0) return;
 
-        // 2. Input handling (Using unscaledTime so pause doesn't break the clock)
+        
         if (Input.GetMouseButtonDown(0) && Time.unscaledTime >= nextClickTime)
         {
             if (!EventSystem.current.IsPointerOverGameObject()) 
@@ -66,7 +65,8 @@ public class BotController : MonoBehaviour
             NavMeshPath path = new NavMeshPath();
             if (agent.CalculatePath(hit.point, path))
             {
-                if (GetPathLength(path) > maxPathDistance) return; 
+                if (GetPathLength(path) > maxPathDistance) 
+                return; 
 
                 currentMarker = Instantiate(markerPrefab, hit.point, Quaternion.identity);
                 currentMarker.layer = Mathf.RoundToInt(Mathf.Log(baitLayer.value, 2));
@@ -90,31 +90,30 @@ public class BotController : MonoBehaviour
 
     void TriggerLose()
     {
-        // 1. Immediately destroy the bait so the distance check 
-        // stops returning 'true' on the very next frame.
+        
         ClearBait();
 
-        // 2. Show the Screen
+        
         if (loseMenuUI != null) loseMenuUI.SetActive(true);
         
-        // 3. Freeze the game
+  
         Time.timeScale = 0f;
     }
 
-    // Call this from your Replay button (GameMenuManager)
+  
     public void ResetBot(Vector3 startPos)
     {
-        // Wipe everything
+       
         ClearBait();
         nextClickTime = 0;
 
-        // Move the bot
+       
         agent.enabled = false; 
         transform.position = startPos;
         agent.enabled = true;
         agent.ResetPath();
         
-        // Unfreeze time
+       
         Time.timeScale = 1f;
     }
 
@@ -123,7 +122,7 @@ public class BotController : MonoBehaviour
         if (currentMarker != null)
         {
             Destroy(currentMarker);
-            currentMarker = null; // Important: nullify so distance check stops
+            currentMarker = null; 
         }
 
         if (agent.isActiveAndEnabled && agent.isOnNavMesh)

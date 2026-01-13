@@ -2880,7 +2880,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   clickCooldown: 1
-  maxPathDistance: 30
+  maxPathDistance: 20
   arrivalThreshold: 0.5
 --- !u!195 &1041384280
 NavMeshAgent:
